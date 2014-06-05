@@ -1,3 +1,7 @@
+html, body {
+  margin-top: 0 !important;
+}
+
 body {
   font-family: 'Duru Sans', sans-serif !important;
 }
@@ -24,4 +28,13 @@ h1,h2,h3,h4,h5,h6 {
 
 ul li {
   font-size: 23px !important;
+  list-style-type: none !important;
+}
+
+ul li > .smaller {
+  font-size: 15px !important;
+}
+
+#noOpacity {
+  opacity: 1 !important;
 }

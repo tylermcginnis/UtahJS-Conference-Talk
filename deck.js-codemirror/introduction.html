@@ -36,128 +36,245 @@
 
 <body>
 	<article class="deck-container">
+
+    <!-- Opening Slide -->
 		<section class="slide" id="codemirror-intro">
 			<h1> Do you REALLY know JavaScript? </h1>
 		</section>
 
+
+
+    <!-- Topics Slide -->
     <section class="slide" id="topics">
       <h2> Topics </h2>
       <ul>
-        <li>Item One</li>
-        <li>Item Two</li>
-        <li>Item Three</li>
+        <li>Higher Order Functions</li>
+        <li>Hoisting</li>
+        <li>Prototypes</li>
+        <li>Functions, Methods, Constructors</li>
+        <li>'this'</li>
+        <li>'new'</li>
+        <li>Closures</li>
+        <li>Patterns</li>
       </ul>
     </section>
 
-		<section class="slide" id="textarea-code">
-			<h2> Higher Order Functions </h2>
+
+
+    <!-- Higher Order Functions -->
+    <section class="slide" id="higher-order-functions">
+      <h2> Higher Order Functions </h2>
       <ul>
-        <li id="first_bullet">Asynchronous Programming </li>
-        <li>Functions are First Class Objects</li>
-        <li>Defined: Functions that take other functions as arguments or return functions as their result.</li>
+        <li class="slide">Asynchronous Programming </li>
+        <li class="slide">Functions are First Class Objects</li>
+        <li class="slide">Defined: Functions that take other functions as arguments or return functions as their result.</li>
       </ul>
-			<div>
-      <h3> jQuery use of Callbacks </h3>
-      <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
-      $("#btn_1").click(function() {
-        alert("Btn 1 Clicked");
-      });
-    </textarea></div>
-		<br /><br />
-    <div>
-      <h3> Underscore's _.each() </h3>
-      <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
-      var each = function(collection, callBack){
-         if(Array.isArray(collection)){
-           for(var i = 0; i < collection.length; i++){
-             callBack(collection[i], i, collection);
-           }
-         } else if (Object.prototype.toString.call(collection) === '[object Object]'){
-           for(var key in collection){
-             callBack(collection[key], key, collection);
-           }
-         }
-      };
-
-      var arr = [1,2,3,4];
-      var obj = {name: 'Tyler', age: '24'};
-
-      each(arr, function(item, indice, coll){
-        console.log('The Item is: "' + item +'" the Indice is: "' + indice + '".');
-      });
-
-    </textarea>
-  </div>
-
-		</section>
-
-		<section class="slide" id="textarea-spec">
-			<h2> That code was created with a text area that had the following attributes: </h2>
-			<ul>
-				<li>class - "code"</li>
-				<li>mode  - "javascript"</li>
-				<li>runnable - "true" </li>
-			</ul>
-			<h3> The rest just HAPPENS </h3>
-			<p> Code blocks aren't runnable by default. Because you might want to put crazy non runnable code in there. Like, html. </p>
-			<p> You can specify a codemirror theme as long as you include the stylesheet for it by setting the <i>theme</i> attribute </p>
-		</section>
-
-		<section class="slide" id="div-code">
-			<h2> This Code is in a div! </h2>
-			<div>
-				<div id="code" name="code" class="code" mode="javascript" style="display: none;">// codemirror demo party!
-var obj = { text : "Hello all!"};
-console.log("HI THERE");</div>
-			</div>
-			</br>
-			<p>
-				It looks like this: <br />
-				<code>
-&lt;div id=&quot;code&quot; class=&quot;code&quot; name=&quot;code&quot; mode=&quot;javascript&quot; style=&quot;display: none;&quot;&gt;
-<br>// codemirror demo party!
-<br>var obj = { text : &quot;Hello all!&quot;};
-<br>console.log(&quot;HI THERE&quot;);
-<br>&lt;/div&gt;
-				</code>
-			</p>
-		</section>
-
-		<section class="slide" id="textarea-code">
-			<h2> HTML Syntax?! Sweet. </h2>
-			<p>
-			  Note that it's defined by being put inside a textarea, that way it doesn't
-			  get evaluated. Replicate that however you see fit.
-			  Also, set the mode="text/html", not just "html".
-			</p>
-			<div>
-		  	<textarea type="text/html" class="code" mode="text/html" style="display: none;">// codemirror demo party!
-<html style="color: green">
-  <!-- this is a comment -->
-  <head>
-    <title>Mixed HTML Example</title>
-    <style type="text/css">
-      h1 {font-family: comic sans; color: #f0f;}
-      div {background: yellow !important;}
-      body {
-        max-width: 50em;
-        margin: 1em 2em 1em 5em;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Mixed HTML Example</h1>
-    <script>
-      function jsFunc(arg1, arg2) {
-        if (arg1 && arg2) document.body.innerHTML = "achoo";
-      }
-    </script>
-  </body>
-</html>
-        </textarea>
+      <div class="slide">
+        <h3> jQuery use of Callbacks </h3>
+          <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+$("#btn_1").click(function() {
+  alert("Btn 1 Clicked");
+});
+          </textarea>
       </div>
-		</section>
-    		
+      <br />
+      <div class="slide">
+        <h3> Underscore's _.each() </h3>
+          <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+  var each = function(collection, callBack){
+     if(Array.isArray(collection)){
+       for(var i = 0; i < collection.length; i++){
+         callBack(collection[i], i, collection);
+       }
+     } else if (Object.prototype.toString.call(collection) === '[object Object]'){
+       for(var key in collection){
+         callBack(collection[key], key, collection);
+       }
+     }
+  };
+
+  var arr = [1,2,3,4];
+  var obj = {name: 'Tyler', age: '24'};
+
+  each(arr, function(item, indice, coll){
+    console.log('The Item is: "' + item +'" the Indice is: "' + indice + '".');
+  });
+
+          </textarea>
+      </div>
+    </section>
+
+
+      <!-- Variable Hoisting-->
+    <section class="slide" id="VariableHoisting">
+      <h2> Variable Hoisting</h2>
+      <ul>
+        <li class="slide" id="noOpacity">Variable declarations are hoisted 
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var myVariable = 'Outer Value';
+var fn = function(){
+alert(myVariable);
+var myVariable = 'New Local Value';
+};
+
+fn();
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" > What the interpreter does
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var myVariable = 'Outer Value';
+var fn = function(){
+var myVariable; //declaration
+alert(myVariable);
+myVariable = 'New Local Value'; //initialization
+};
+
+fn();
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+    <!-- Function Hoisting -->
+    <section class="slide" id="FunctionHoisting">
+      <h2> Function Declaration Hoisting </h2>
+      <ul>
+        <li class="slide" id="noOpacity">Function Expression vs Function Declaration
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+function fnDeclaration(){
+return 'Function declaration defined a named fn variable without requiring variable assignment.';
+}
+
+var fnExpression = function(){
+return 'Function expression defined a fn as part of a variable assignment.'
+}
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity"> Function Declarations are Hoisted
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+function foo(){
+  function bar() {
+      return 1;
+  }
+  return bar();
+  function bar() {
+      return 2;
+  }
+}
+alert(foo());
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity"> What the interpreter does
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+function foo(){
+  function bar() {
+      return 1;
+  }
+  function bar() {
+      return 2;
+  }
+  return bar();
+}
+alert(foo());
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+    <!-- Function Hoisting Cont -->
+    <section class="slide" id="FunctionHoisting">
+      <h2> Function Declaration Hoisting </h2>
+      <ul>
+        <li id="noOpacity">Function Expression vs Function Declaration
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+function fnDeclaration(){
+return 'Function declaration defined a named fn variable without requiring variable assignment.';
+}
+
+var fnExpression = function(){
+return 'Function expression defined a fn as part of a variable assignment.'
+}
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity"> Function Expressions are...not really Hoisted
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+function foo(){
+  var bar = function() {
+      return 1;
+  };
+  return bar();
+  var bar = function() {
+      return 2;
+  };
+}
+alert(foo());
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity"> What the interpreter does
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+function foo(){
+  var bar = undefined; //declarations hoisted
+  var bar = undefined;
+  bar = function() { //initializations not
+      return 1;
+  };
+  return bar();
+}
+alert(foo());
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+
+    <!-- Prototypes -->
+    <section class="slide" id="prototypes">
+      <h2> Prototypes </h2>
+      <ul>
+        <li class="slide"> Classes vs Prototypes </li>
+        <li class="slide"> Backpack Analogy </li>
+      </ul>
+      <div class="slide">
+          <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+Array.prototype.each = function(callBack){
+   for(var i = 0; i < this.length; i++){
+     callBack(this[i], i, this);
+   }
+};
+
+var names = ['Tyler', 'Jake', 'Mikenzi'];
+names.each(function(item, indice){
+  console.log('The Item at  ' + indice + ' is ' + item);
+})
+          </textarea>
+      </div>
+      <ul>
+        <li class="slide"> Don't store per-instance data on a prototype (usually just methods and immutable data). </li>
+      </ul>
+      <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+//per-instance example here.
+      </textarea>
+    </section>
+
+
+
+
+    <!-- new slide -->
 		<section class="slide" id="textarea-code">
 			<h2> Two runnable code blocks?! CRAZY! </h2>
 			<h3> First </h3>
@@ -205,15 +322,6 @@ console.log(someVar);</textarea></div>
       </code>
       <textarea id="code4" name="code" class="code" mode="javascript" style="display: none;" runnable="true" globals="$">// output my log
 console.log($('script').size());</textarea>
-		</section>
-		
-		<section class="slide" id="info">
-			<h2> Repo: </h2>
-			<a href="https://github.com/iros/deck.js-codemirror">https://github.com/iros/deck.js-codemirror</a>
-			<h3> By: </h3>
-			Irene Ros <br />
-			<a href="../../index.html">http://ireneros.com</a> <br />
-			<a href="http://twitter.com/ireneros">@ireneros</a>
 		</section>
 
 		<a href="introduction.html#" class="deck-prev-link" title="Previous">&#8592;</a>
