@@ -51,11 +51,10 @@
         <li>Higher Order Functions</li>
         <li>Hoisting</li>
         <li>Prototypes</li>
-        <li>Functions, Methods, Constructors</li>
+        <li>Functions vs Constructors</li>
         <li>'this'</li>
-        <li>'new'</li>
+        <li>'new' - and why it's bad</li>
         <li>Closures</li>
-        <li>Patterns</li>
       </ul>
     </section>
 
@@ -519,6 +518,96 @@ me.sayName();
           </span>
         </li><br />
     </section>
+
+
+
+    <!-- Closures -->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Closures</h2>
+      <ul>
+        <li class="slide"> Allow you to refer to variables that were defined outside of the current function. 
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var callFriend = function(){
+  var friend = 'Jake';
+  function callF(number){
+    return 'Calling ' + friend + ' at ' + number;
+  }
+  console.log(callF('435-215-1111'));
+};
+
+callFriend();
+            </textarea>
+          </span>
+        </li>
+        <li class="slide"> Functions can refer to variables defined in outer functions even after those outer functions have returned
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var callFriend = function(){
+  var friend = 'Jake';
+  function callF(number){
+    return 'Calling ' + friend + ' at ' + number;
+  }
+  return callF;
+};
+
+var fn = callFriend();
+console.log(fn('435-215-1111'));
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+    <!-- Closures Cont-->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Closures Continued</h2>
+      <ul>
+        <li class="slide"> Closures allow us to have 'private' data
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var User = function(name, pwHash){
+  var obj = this instanceof User ? this : Object.create(User.prototype);
+  obj.getName = function(){
+    return 'User: ' + name;
+  };
+  obj.checkPassword = function(password){
+    return hash(password) === pwHash;
+  }
+}
+
+var user1 = new User('Tyler', '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824');
+var name = user1.getName();
+console.log(name);
+user1.checkPassword('uTahJS');
+            </textarea>
+          </span>
+        </li>
+        <li class="slide"> Module Pattern
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Module = function(){
+  var obj = this instanceof Module ? this : Object.create(Module.prototype);
+  var privateData1 = 'Tyler';
+  obj.getter = function(){
+    return privateData1;
+  };
+  obj.setter = function(newVal){
+      privateData1 = newVal;
+  };
+
+  return obj;
+}
+
+var moduleInstance = Module();
+console.log(moduleInstance.getter());
+moduleInstance.setter('Jake');
+console.log(moduleInstance.getter());
+            </textarea>
+          </span>
+        </li>
+    </section>
+
 
     
 
