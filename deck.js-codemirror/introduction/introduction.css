@@ -38,3 +38,7 @@ ul li > .smaller {
 #noOpacity {
   opacity: 1 !important;
 }
+
+.deck-container {
+  min-height: 850px !important;
+}
