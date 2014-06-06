@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	
-	<title>Getting Started with deck.js - CodeMirror Test Deck</title>
+	<title>Do you REALLY know JavaScript? : Tyler McGinnis</title>
 	
 	<meta name="description" content="A jQuery library for modern HTML presentations">
 	<meta name="viewport" content="width=1024, user-scalable=no">
@@ -266,24 +266,97 @@ names.each(function(item, indice){
       <ul>
         <li class="slide"> Don't store per-instance data on a prototype (usually just methods and immutable data). </li>
       </ul>
-      <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
-//per-instance example here.
-      </textarea>
+    </section>
+
+
+
+    <!-- this --> 
+    <section class="slide" id="makerFnvsConst">
+      <h2> WTF is 'this'?</h2>
+      <ul>
+        <li class="slide" id="noOpacity"> 'this' is bound to one of three things </li><br/>
+        <li class="slide" id="noOpacity">Left of the Dot at Run Time
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var me = {};
+me.name = 'Tyler';
+me.sayName = function(){
+  console.log(this.name);
+}
+me.sayName()
+            </textarea>
+          </span>
+        </li> <br />
+        <li class="slide" id="noOpacity">If a class has been instantiated using 'new', 'this' is bound to the newly created object.
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name){
+  this.name = name;
+}
+Person.prototype.sayName = function(){
+  console.log(this.name);
+}
+var me = new Person('Tyler');
+me.sayName();
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity">If a function is being called with .call() or .apply(), 'this' is bound to whatever context is passed in.
+        <script type="codemirror" data-selector="#code-call">
+          var Person = function(name){
+            this.name = name;
+          }
+          Person.prototype.sayName = function(){
+            console.log(this.name);
+          }
+        </script>
+          <span class="smaller">
+            <textarea id="code-call" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var me = {};
+me.name = 'Tyler'
+Person.prototype.sayName.call(me);
+me.sayName();
+            </textarea>
+          </span>
+        </li>
     </section>
 
 
 
 
-    <!-- new slide -->
-		<section class="slide" id="textarea-code">
-			<h2> Two runnable code blocks?! CRAZY! </h2>
-			<h3> First </h3>
-			<div><textarea id="code2" name="code" class="code" mode="javascript" style="display: none;" runnable="true">// codemirror demo party!
-console.log(1);</textarea></div>
-			<h3> Second </h3>
-			<div><textarea id="code3" name="code" class="code" mode="javascript" style="display: none;" runnable="true">// codemirror demo party!
-console.log(2);</textarea></div>
-		</section>
+    <!-- Maker Function vs Constructor-->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Maker Function vs Constructor</h2>
+      <ul>
+        <li class="slide" id="noOpacity"> Every function (besides Constructors) returns either the data you specify it to return or undefined. </li>
+        <li class="slide" id="noOpacity">Function
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var personMaker = function(name, age){
+  var person = Object.create(personMaker.prototype);
+  person.name = name;
+  person.age = age;
+  return person;
+}
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity">Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+}
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+
+
+
 
     <section class="slide" id="hidden-script-tags">
 			<h2> Need to run some setup for your codes? </h2>
