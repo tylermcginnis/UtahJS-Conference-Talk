@@ -609,6 +609,36 @@ console.log(moduleInstance.getter());
         </li>
     </section>
 
+    <section class="slide" id="makerFnvsConst">
+      <h2> About Me </h2>
+      <ul> 
+        <li class="slide"> Me
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, work, otherWork, twitter, github, devMtn, slideLocation){
+  var obj = this instanceof Person ? this : Object.create(Person.prototype);
+  obj.name = name;
+  obj.work = work;
+  obj.otherWork = otherWork;
+  obj.twitter = twitter;
+  obj.github = github;
+  obj.devMtn = devMtn;
+  obj.slideLocation = slideLocation
+}
+
+var me = new Person('Tyler McGinnis', 'Needle', 'Dev Mountain', '@tylermcginnis33', '/tylermcginnis33', 'If you like teaching and want to teach JS, find me.', 'https://github.com/tylermcginnis33/UtahJS-Conference-Talk');
+
+for(var key in me){
+  console.log(key + ': ' + me[key]);
+}
+            </textarea>
+          </span>
+        </li>
+      </ul>
+        
+
+    </section>
+
 
     
 
