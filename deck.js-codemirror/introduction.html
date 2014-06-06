@@ -81,17 +81,17 @@ $("#btn_1").click(function() {
       <div class="slide">
         <h3> Underscore's _.each() </h3>
           <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
-  var each = function(collection, callBack){
-     if(Array.isArray(collection)){
-       for(var i = 0; i < collection.length; i++){
-         callBack(collection[i], i, collection);
-       }
-     } else if (Object.prototype.toString.call(collection) === '[object Object]'){
-       for(var key in collection){
-         callBack(collection[key], key, collection);
-       }
-     }
-  };
+var each = function(collection, callBack){
+  if(Array.isArray(collection)){
+    for(var i = 0; i < collection.length; i++){
+     callBack(collection[i], i, collection);
+    }
+  } else if (Object.prototype.toString.call(collection) === '[object Object]'){
+     for(var key in collection){
+     callBack(collection[key], key, collection);
+    }
+  }
+};
 
   var arr = [1,2,3,4];
   var obj = {name: 'Tyler', age: '24'};
@@ -114,8 +114,8 @@ $("#btn_1").click(function() {
             <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
 var myVariable = 'Outer Value';
 var fn = function(){
-alert(myVariable);
-var myVariable = 'New Local Value';
+  alert(myVariable);
+  var myVariable = 'New Local Value';
 };
 
 fn();
@@ -127,9 +127,9 @@ fn();
             <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
 var myVariable = 'Outer Value';
 var fn = function(){
-var myVariable; //declaration
-alert(myVariable);
-myVariable = 'New Local Value'; //initialization
+  var myVariable; //declaration
+  alert(myVariable);
+  myVariable = 'New Local Value'; //initialization
 };
 
 fn();
@@ -152,7 +152,7 @@ return 'Function declaration defined a named fn variable without requiring varia
 
 var fnExpression = function(){
 return 'Function expression defined a fn as part of a variable assignment.'
-}
+};
             </textarea>
           </span>
         </li>
@@ -203,7 +203,7 @@ return 'Function declaration defined a named fn variable without requiring varia
 
 var fnExpression = function(){
 return 'Function expression defined a fn as part of a variable assignment.'
-}
+};
             </textarea>
           </span>
         </li>
@@ -282,8 +282,8 @@ var me = {};
 me.name = 'Tyler';
 me.sayName = function(){
   console.log(this.name);
-}
-me.sayName()
+};
+me.sayName();
             </textarea>
           </span>
         </li> <br />
@@ -292,10 +292,10 @@ me.sayName()
             <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
 var Person = function(name){
   this.name = name;
-}
+};
 Person.prototype.sayName = function(){
   console.log(this.name);
-}
+};
 var me = new Person('Tyler');
 me.sayName();
             </textarea>
@@ -313,7 +313,7 @@ me.sayName();
           <span class="smaller">
             <textarea id="code-call" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
 var me = {};
-me.name = 'Tyler'
+me.name = 'Tyler';
 Person.prototype.sayName.call(me);
 me.sayName();
             </textarea>
@@ -328,8 +328,7 @@ me.sayName();
     <section class="slide" id="makerFnvsConst">
       <h2> Maker Function vs Constructor</h2>
       <ul>
-        <li class="slide" id="noOpacity"> Every function (besides Constructors) returns either the data you specify it to return or undefined. </li>
-        <li class="slide" id="noOpacity">Function
+        <li class="slide" id="noOpacity">Maker Function
           <span class="smaller">
             <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
 var personMaker = function(name, age){
@@ -337,7 +336,25 @@ var personMaker = function(name, age){
   person.name = name;
   person.age = age;
   return person;
-}
+};
+
+personMaker.prototype.sayName = function(){
+  console.log(this.name);
+};
+
+var me = personMaker('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li>
+        <li class="slide">Object.create
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+Object.create = function(obj){
+  var fn = function(){};
+  fn.prototype = obj;
+  return new F();
+};
             </textarea>
           </span>
         </li>
@@ -347,7 +364,104 @@ var personMaker = function(name, age){
 var Person = function(name, age){
   this.name = name;
   this.age = age;
-}
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+
+var me = new Person('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+    <!-- Constructor and New -->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Constructor and 'new'</h2>
+      <ul>
+        <li id="noOpacity">Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+
+var me = new Person('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity">'new' behind the scenes
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  //this = Object.create(Person.prototype);
+  this.name = name;
+  this.age = age;
+  //return this;
+};
+            </textarea>
+          </span>
+        </li>
+
+    </section>
+
+
+
+    <!-- Downfall of New -->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Problem with 'new'</h2>
+      <ul>
+        <li id="noOpacity">Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity"> What happens if we (or someone else) calls our constructor without 'new'? </li> <br />
+        <li class="slide" id="noOpacity">Constructor
+          <span class="smaller">
+          <script type="codemirror" data-selector="#code-new">
+            var Person = function(name, age){
+              this.name = name;
+              this.age = age;
+            };
+
+            Person.prototype.sayName = function(){
+              console.log(this.name);
+            };
+          </script>
+            <textarea id="code-new" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var me = Person('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity">Without 'new', 'this' is not created, defaults to the global Window object, and doesn't delegate to it's prototype.
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  //this = Object.create(Person.prototype);
+  this.name = name;
+  this.age = age;
+  //return this;
+};
             </textarea>
           </span>
         </li>
@@ -355,47 +469,58 @@ var Person = function(name, age){
 
 
 
+    <!-- new-agnostic constructor -->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Solution: Make 'new'-agnostic constructors</h2>
+      <ul>
+        <li id="noOpacity">Original Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+};
 
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity">'new' behind the scenes
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  //this = Object.create(Person.prototype);
+  this.name = name;
+  this.age = age;
+  //return this;
+};
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity">New Agnostic Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, age){
+  var person = this instanceof Person ? this : Object.create(Person.prototype);
+  person.name = name;
+  person.age = age;
+  return person;
+};
 
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
 
-    <section class="slide" id="hidden-script-tags">
-			<h2> Need to run some setup for your codes? </h2>
-			<h3> Embed a secret hidden script tag like so in your slide: </h3>
-			
-			<script type="codemirror" data-selector="#code4">
-			  var someVar = 10;
-			</script>
-			
-      <code>
-&lt;script type=&quot;codemirror&quot; data-selector=&quot;#code3&quot;&gt;<br/>
-  var someVar = 10;<br/>
-&lt;/script&gt;<br/>
-  		</code>
-  		
-  		<h3> Then your code </h3>
-			<div><textarea id="code4" name="code" class="code" mode="javascript" style="display: none;" runnable="true">// output my log
-console.log(someVar);</textarea></div>
+var me = Person('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li><br />
     </section>
 
-    <section class="slide" id="globals">
-			<h2> Sometimes you need some globals </h2>
-			<p> 
-			  Sometimes you just need to access a global of some kind. The code in the codemirror 
-			  editors is executed in a sandbox, which means whatever it is you load in your actual 
-			  slides, is NOT going to be available by default.
-			</p>
-			<p>
-        To give access to, for example, jQuery object, define a "globals" attribute on the code blocks with 
-        the names of the vars you need.
-      </p>
-      
-      <code>
-&lt;textarea id=&quot;code4&quot; name=&quot;code&quot; class=&quot;code&quot; mode=&quot;javascript&quot; style=&quot;display: none;&quot; runnable=&quot;true&quot; globals=&quot;$&quot;&gt;<br />  // output my log
-  console.log($(&#39;script&#39;).size());<br />&lt;/textarea&gt;<br />
-      </code>
-      <textarea id="code4" name="code" class="code" mode="javascript" style="display: none;" runnable="true" globals="$">// output my log
-console.log($('script').size());</textarea>
-		</section>
+    
 
 		<a href="introduction.html#" class="deck-prev-link" title="Previous">&#8592;</a>
 		<a href="introduction.html#" class="deck-next-link" title="Next">&#8594;</a>
