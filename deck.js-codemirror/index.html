@@ -40,6 +40,12 @@
     <!-- Opening Slide -->
 		<section class="slide" id="codemirror-intro">
 			<h1> Do you REALLY know JavaScript? </h1>
+      <div class="slide">
+         <img src="http://www.stance.com/shop/media/catalog/product/cache/1/450x/9df78eab33525d08d6e5fb8d27136e95/s/t/stance-stockton-malone-x-legends-socks.jpg"/>
+      </div>
+      <div class="slide">
+         <img src="https://angularjs.org/img/AngularJS-large.png"/>
+      </div>
 		</section>
 
 
@@ -56,6 +62,16 @@
         <li>'new' - and why it's bad</li>
         <li>Closures</li>
       </ul>
+    </section>
+
+    <section class="slide" id="notForYou">
+      <h1> Is this talk for me? </h1>
+      <div class="slide">
+         <img src="http://ecx.images-amazon.com/images/I/71M32wxOOmL._SL1360_.jpg" style="width: 300px;">
+      </div>
+      <div class="slide">
+         <img src="js_dev.png" style="width: 200px;"/>
+      </div>
     </section>
 
 
@@ -91,7 +107,7 @@ var each = function(collection, callBack){
   }
 };
 
-  var arr = [1,2,3,4];
+  var arr = [1,2,3];
   var obj = {name: 'Tyler', age: '24'};
 
   each(arr, function(item, indice, coll){
@@ -437,17 +453,16 @@ Person.prototype.sayName = function(){
         <li class="slide" id="noOpacity"> What happens if we (or someone else) calls our constructor without 'new'? </li> <br />
         <li class="slide" id="noOpacity">Constructor
           <span class="smaller">
-          <script type="codemirror" data-selector="#code-new">
-            var Person = function(name, age){
-              this.name = name;
-              this.age = age;
-            };
-
-            Person.prototype.sayName = function(){
-              console.log(this.name);
-            };
-          </script>
             <textarea id="code-new" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+
 var me = Person('Tyler', 24);
 me.sayName();
             </textarea>
@@ -615,9 +630,10 @@ console.log(moduleInstance.getter());
         <li class="slide"> Me
           <span class="smaller">
             <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
-var Person = function(name, work, otherWork, twitter, github, devMtn, slideLocation){
+var Person = function(name, email, work, otherWork, twitter, github, devMtn, slideLocation){
   var obj = this instanceof Person ? this : Object.create(Person.prototype);
   obj.name = name;
+  obj.email = email;
   obj.work = work;
   obj.otherWork = otherWork;
   obj.twitter = twitter;
@@ -626,7 +642,7 @@ var Person = function(name, work, otherWork, twitter, github, devMtn, slideLocat
   obj.slideLocation = slideLocation
 }
 
-var me = new Person('Tyler McGinnis', 'Needle', 'Dev Mountain', '@tylermcginnis33', '/tylermcginnis33', 'If you like teaching and want to teach JS, find me.', 'https://github.com/tylermcginnis33/UtahJS-Conference-Talk');
+var me = new Person('Tyler McGinnis', 'tylermcginnis33@gmail.com' ,'Needle', 'Dev Mountain', '@tylermcginnis33', '/tylermcginnis33', 'If you like teaching and want to teach JS, find me.', 'https://github.com/tylermcginnis33/UtahJS-Conference-Talk');
 
 for(var key in me){
   console.log(key + ': ' + me[key]);
