@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>Do you REALLY know JavaScript? : Tyler McGinnis</title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../deck.js/core/deck.core.css">
+	<link rel="stylesheet" href="../deck.js/extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../deck.js/extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../deck.js/extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../deck.js/extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../deck.js/extensions/hash/deck.hash.css">
+
+	<!-- include code mirror default css and the theme you want. -->
+	<link rel="stylesheet" href="deck.codemirror.css">
+	<link rel="stylesheet" href="themes/default.css">
+
+	<!-- Theme CSS files (menu swaps these out) -->
+	<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
+	
+	<link rel="stylesheet" href="introduction/introduction.css">	
+  <link href='http://fonts.googleapis.com/css?family=Lato:300italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Duru+Sans' rel='stylesheet' type='text/css'>
+	
+	<script src="introduction/modernizr.custom.js"></script>
+</head>
+
+<body>
+	<article class="deck-container">
+
+    <!-- Opening Slide -->
+		<section class="slide" id="codemirror-intro">
+			<h1> Do you REALLY know JavaScript? </h1>
+		</section>
+
+
+
+    <!-- Topics Slide -->
+    <section class="slide" id="topics">
+      <h2> Topics </h2>
+      <ul>
+        <li>Higher Order Functions</li>
+        <li>Hoisting</li>
+        <li>Prototypes</li>
+        <li>Functions vs Constructors</li>
+        <li>'this'</li>
+        <li>'new' - and why it's bad</li>
+        <li>Closures</li>
+      </ul>
+    </section>
+
+
+
+    <!-- Higher Order Functions -->
+    <section class="slide" id="higher-order-functions">
+      <h2> Higher Order Functions </h2>
+      <ul>
+        <li class="slide">Asynchronous Programming </li>
+        <li class="slide">Functions are First Class Objects</li>
+        <li class="slide">Defined: Functions that take other functions as arguments or return functions as their result.</li>
+      </ul>
+      <div class="slide">
+        <h3> jQuery use of Callbacks </h3>
+          <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+$("#btn_1").click(function() {
+  alert("Btn 1 Clicked");
+});
+          </textarea>
+      </div>
+      <br />
+      <div class="slide">
+        <h3> Underscore's _.each() </h3>
+          <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var each = function(collection, callBack){
+  if(Array.isArray(collection)){
+    for(var i = 0; i < collection.length; i++){
+     callBack(collection[i], i, collection);
+    }
+  } else if (Object.prototype.toString.call(collection) === '[object Object]'){
+     for(var key in collection){
+     callBack(collection[key], key, collection);
+    }
+  }
+};
+
+  var arr = [1,2,3,4];
+  var obj = {name: 'Tyler', age: '24'};
+
+  each(arr, function(item, indice, coll){
+    console.log('The Item is: "' + item +'" the Indice is: "' + indice + '".');
+  });
+
+          </textarea>
+      </div>
+    </section>
+
+
+      <!-- Variable Hoisting-->
+    <section class="slide" id="VariableHoisting">
+      <h2> Variable Hoisting</h2>
+      <ul>
+        <li class="slide" id="noOpacity">Variable declarations are hoisted 
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var myVariable = 'Outer Value';
+var fn = function(){
+  alert(myVariable);
+  var myVariable = 'New Local Value';
+};
+
+fn();
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" > What the interpreter does
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var myVariable = 'Outer Value';
+var fn = function(){
+  var myVariable; //declaration
+  alert(myVariable);
+  myVariable = 'New Local Value'; //initialization
+};
+
+fn();
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+    <!-- Function Hoisting -->
+    <section class="slide" id="FunctionHoisting">
+      <h2> Function Declaration Hoisting </h2>
+      <ul>
+        <li class="slide" id="noOpacity">Function Expression vs Function Declaration
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+function fnDeclaration(){
+return 'Function declaration defined a named fn variable without requiring variable assignment.';
+}
+
+var fnExpression = function(){
+return 'Function expression defined a fn as part of a variable assignment.'
+};
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity"> Function Declarations are Hoisted
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+function foo(){
+  function bar() {
+      return 1;
+  }
+  return bar();
+  function bar() {
+      return 2;
+  }
+}
+alert(foo());
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity"> What the interpreter does
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+function foo(){
+  function bar() {
+      return 1;
+  }
+  function bar() {
+      return 2;
+  }
+  return bar();
+}
+alert(foo());
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+    <!-- Function Hoisting Cont -->
+    <section class="slide" id="FunctionHoisting">
+      <h2> Function Declaration Hoisting </h2>
+      <ul>
+        <li id="noOpacity">Function Expression vs Function Declaration
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+function fnDeclaration(){
+return 'Function declaration defined a named fn variable without requiring variable assignment.';
+}
+
+var fnExpression = function(){
+return 'Function expression defined a fn as part of a variable assignment.'
+};
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity"> Function Expressions are...not really Hoisted
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+function foo(){
+  var bar = function() {
+      return 1;
+  };
+  return bar();
+  var bar = function() {
+      return 2;
+  };
+}
+alert(foo());
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity"> What the interpreter does
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+function foo(){
+  var bar = undefined; //declarations hoisted
+  var bar = undefined;
+  bar = function() { //initializations not
+      return 1;
+  };
+  return bar();
+}
+alert(foo());
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+
+    <!-- Prototypes -->
+    <section class="slide" id="prototypes">
+      <h2> Prototypes </h2>
+      <ul>
+        <li class="slide"> Classes vs Prototypes </li>
+        <li class="slide"> Backpack Analogy </li>
+      </ul>
+      <div class="slide">
+          <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+Array.prototype.each = function(callBack){
+   for(var i = 0; i < this.length; i++){
+     callBack(this[i], i, this);
+   }
+};
+
+var names = ['Tyler', 'Jake', 'Mikenzi'];
+names.each(function(item, indice){
+  console.log('The Item at  ' + indice + ' is ' + item);
+})
+          </textarea>
+      </div>
+      <ul>
+        <li class="slide"> Don't store per-instance data on a prototype (usually just methods and immutable data). </li>
+      </ul>
+    </section>
+
+
+
+    <!-- this --> 
+    <section class="slide" id="makerFnvsConst">
+      <h2> WTF is 'this'?</h2>
+      <ul>
+        <li class="slide" id="noOpacity"> 'this' is bound to one of three things </li><br/>
+        <li class="slide" id="noOpacity">Left of the Dot at Run Time
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var me = {};
+me.name = 'Tyler';
+me.sayName = function(){
+  console.log(this.name);
+};
+me.sayName();
+            </textarea>
+          </span>
+        </li> <br />
+        <li class="slide" id="noOpacity">If a class has been instantiated using 'new', 'this' is bound to the newly created object.
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name){
+  this.name = name;
+};
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+var me = new Person('Tyler');
+me.sayName();
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity">If a function is being called with .call() or .apply(), 'this' is bound to whatever context is passed in.
+        <script type="codemirror" data-selector="#code-call">
+          var Person = function(name){
+            this.name = name;
+          }
+          Person.prototype.sayName = function(){
+            console.log(this.name);
+          }
+        </script>
+          <span class="smaller">
+            <textarea id="code-call" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var me = {};
+me.name = 'Tyler';
+Person.prototype.sayName.call(me);
+me.sayName();
+            </textarea>
+          </span>
+        </li>
+        <li> *If 'this' is not specified, 'this' will default to the Window object. </li>
+    </section>
+
+
+
+
+    <!-- Maker Function vs Constructor-->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Maker Function vs Constructor</h2>
+      <ul>
+        <li class="slide" id="noOpacity">Maker Function
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var personMaker = function(name, age){
+  var person = Object.create(personMaker.prototype);
+  person.name = name;
+  person.age = age;
+  return person;
+};
+
+personMaker.prototype.sayName = function(){
+  console.log(this.name);
+};
+
+var me = personMaker('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li>
+        <li class="slide">Object.create
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+Object.create = function(obj){
+  var fn = function(){};
+  fn.prototype = obj;
+  return new F();
+};
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity">Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+
+var me = new Person('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+    <!-- Constructor and New -->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Constructor and 'new'</h2>
+      <ul>
+        <li id="noOpacity">Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+
+var me = new Person('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li>
+        <li class="slide" id="noOpacity">'new' behind the scenes
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  //this = Object.create(Person.prototype);
+  this.name = name;
+  this.age = age;
+  //return this;
+};
+            </textarea>
+          </span>
+        </li>
+
+    </section>
+
+
+
+    <!-- Downfall of New -->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Problem with 'new'</h2>
+      <ul>
+        <li id="noOpacity">Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity"> What happens if we (or someone else) calls our constructor without 'new'? </li> <br />
+        <li class="slide" id="noOpacity">Constructor
+          <span class="smaller">
+          <script type="codemirror" data-selector="#code-new">
+            var Person = function(name, age){
+              this.name = name;
+              this.age = age;
+            };
+
+            Person.prototype.sayName = function(){
+              console.log(this.name);
+            };
+          </script>
+            <textarea id="code-new" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var me = Person('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity">Without 'new', 'this' is not created, defaults to the global Window object, and doesn't delegate to it's prototype.
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  //this = Object.create(Person.prototype);
+  this.name = name;
+  this.age = age;
+  //return this;
+};
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+
+    <!-- new-agnostic constructor -->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Solution: Make 'new'-agnostic constructors</h2>
+      <ul>
+        <li id="noOpacity">Original Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  this.name = name;
+  this.age = age;
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity">'new' behind the scenes
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;">
+var Person = function(name, age){
+  //this = Object.create(Person.prototype);
+  this.name = name;
+  this.age = age;
+  //return this;
+};
+            </textarea>
+          </span>
+        </li><br />
+        <li class="slide" id="noOpacity">New Agnostic Constructor
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, age){
+  var person = this instanceof Person ? this : Object.create(Person.prototype);
+  person.name = name;
+  person.age = age;
+  return person;
+};
+
+Person.prototype.sayName = function(){
+  console.log(this.name);
+};
+
+var me = Person('Tyler', 24);
+me.sayName();
+            </textarea>
+          </span>
+        </li><br />
+    </section>
+
+
+
+    <!-- Closures -->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Closures</h2>
+      <ul>
+        <li class="slide"> Allow you to refer to variables that were defined outside of the current function. 
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var callFriend = function(){
+  var friend = 'Jake';
+  function callF(number){
+    return 'Calling ' + friend + ' at ' + number;
+  }
+  console.log(callF('435-215-1111'));
+};
+
+callFriend();
+            </textarea>
+          </span>
+        </li>
+        <li class="slide"> Functions can refer to variables defined in outer functions even after those outer functions have returned
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var callFriend = function(){
+  var friend = 'Jake';
+  function callF(number){
+    return 'Calling ' + friend + ' at ' + number;
+  }
+  return callF;
+};
+
+var fn = callFriend();
+console.log(fn('435-215-1111'));
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+
+    <!-- Closures Cont-->
+    <section class="slide" id="makerFnvsConst">
+      <h2> Closures Continued</h2>
+      <ul>
+        <li class="slide"> Closures allow us to have 'private' data
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var User = function(name, pwHash){
+  var obj = this instanceof User ? this : Object.create(User.prototype);
+  obj.getName = function(){
+    return 'User: ' + name;
+  };
+  obj.checkPassword = function(password){
+    return hash(password) === pwHash;
+  }
+}
+
+var user1 = new User('Tyler', '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824');
+var name = user1.getName();
+console.log(name);
+user1.checkPassword('uTahJS');
+            </textarea>
+          </span>
+        </li>
+        <li class="slide"> Module Pattern
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Module = function(){
+  var obj = this instanceof Module ? this : Object.create(Module.prototype);
+  var privateData1 = 'Tyler';
+  obj.getter = function(){
+    return privateData1;
+  };
+  obj.setter = function(newVal){
+      privateData1 = newVal;
+  };
+
+  return obj;
+}
+
+var moduleInstance = Module();
+console.log(moduleInstance.getter());
+moduleInstance.setter('Jake');
+console.log(moduleInstance.getter());
+            </textarea>
+          </span>
+        </li>
+    </section>
+
+    <section class="slide" id="makerFnvsConst">
+      <h2> About Me </h2>
+      <ul> 
+        <li class="slide"> Me
+          <span class="smaller">
+            <textarea id="code" name="code" class="code" mode="javascript" style="display: none;" runnable="true">
+var Person = function(name, work, otherWork, twitter, github, devMtn, slideLocation){
+  var obj = this instanceof Person ? this : Object.create(Person.prototype);
+  obj.name = name;
+  obj.work = work;
+  obj.otherWork = otherWork;
+  obj.twitter = twitter;
+  obj.github = github;
+  obj.devMtn = devMtn;
+  obj.slideLocation = slideLocation
+}
+
+var me = new Person('Tyler McGinnis', 'Needle', 'Dev Mountain', '@tylermcginnis33', '/tylermcginnis33', 'If you like teaching and want to teach JS, find me.', 'https://github.com/tylermcginnis33/UtahJS-Conference-Talk');
+
+for(var key in me){
+  console.log(key + ': ' + me[key]);
+}
+            </textarea>
+          </span>
+        </li>
+      </ul>
+        
+
+    </section>
+
+
+    
+
+		<a href="index.html#" class="deck-prev-link" title="Previous">&#8592;</a>
+		<a href="index.html#" class="deck-next-link" title="Next">&#8594;</a>
+
+		<p class="deck-status">
+			<span class="deck-status-current"></span>
+			/
+			<span class="deck-status-total"></span>
+		</p>
+
+		<form action="index.html" method="get" class="goto-form">
+			<label for="goto-slide">Go to slide:</label>
+			<input type="number" name="slidenum" id="goto-slide">
+			<input type="submit" value="Go">
+		</form>
+
+		<a href="index.html" title="Permalink to this slide" class="deck-permalink">#</a>
+
+    <footer id="fixed-footer"> @tylermcginnis33</footer> 
+	</article>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+	<script>window.jQuery || document.write('<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js">\x3C/script>')</script>
+
+	<!-- Deck Core and extensions -->
+	<script src="../deck.js/core/deck.core.js"></script>
+	<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+	<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+	<script src="../deck.js/extensions/status/deck.status.js"></script>
+	<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+	<script src="../deck.js/extensions/hash/deck.hash.js"></script>
+  
+  <!-- include the base codemirror code. -->
+  <script src="codemirror.js"></script>
+	
+	<!-- include the code syntax you want to highlight -->
+	<!-- javascript -->
+  <script src="mode/javascript/javascript.js"></script>
+
+  <!-- html mode : note code miror requires xml, css and javasript modes for html rendering -->
+  <script src="mode/xml/xml.js"></script>
+  <script src="mode/css/css.js"></script>
+  <script src="mode/htmlmixed/htmlmixed.js"></script>
+  
+	<script src="deck.codemirror.js"></script>
+	
+	
+	<!-- Stuff specific to this page -->
+	<script src="introduction/introduction.js"></script>
+
+</body>
+</html>
